@@ -5,10 +5,12 @@ import bodyParser from "body-parser";
 
 //import routes
 import Registerroutes from "./routes/register.js"
+import Customerrouter from "./routes/Custome.js";
 
 //init functions
 const app = express()
 
+app.use(bodyParser.json())
 //port
 const PORT = 5000
 
@@ -25,12 +27,13 @@ mongoose.connect(process.env.DATABASE_URL)
 })
 
 // test-routes
-app.get("/",(req,res)=>{
-    res.send('working')
-})
+app.get("/",Registerroutes)
 
 //register new users
 app.use("/Register",Registerroutes)
+
+//creating a new customer
+app.use("/customers",Customerrouter)
 
 //start server
 app.listen(PORT,(err)=>{
