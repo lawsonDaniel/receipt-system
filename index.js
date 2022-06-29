@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 
 //import routes
 import Registerroutes from "./routes/register.js"
-
+import LoginRouter from './routes/Login.js'
 
 //init functions
 const app = express()
@@ -32,7 +32,8 @@ app.get("/",Registerroutes)
 //register new users
 app.use("/Register",Registerroutes)
 
-//creating a new customer
+//login route
+app.use("/Login",LoginRouter)
 
 
 //start server
