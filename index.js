@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 
 //import routes
 import Registerroutes from "./routes/register.js"
-import Customerrouter from "./routes/Custome.js";
+
 
 //init functions
 const app = express()
@@ -33,7 +33,7 @@ app.get("/",Registerroutes)
 app.use("/Register",Registerroutes)
 
 //creating a new customer
-app.use("/customers",Customerrouter)
+
 
 //start server
 app.listen(PORT,(err)=>{

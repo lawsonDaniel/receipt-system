@@ -1,6 +1,7 @@
 import express  from "express";
 import Users from '../models/usersSchema.js'
 import bcrypt from 'bcrypt'
+
 const Registerroutes = express.Router()
 
 //routing for creating new users
@@ -32,7 +33,9 @@ Registerroutes.post("/",(req,res)=>{
     })
 })
 
-  //routing to add new customers
+ 
+
+
 
 })
 Registerroutes.get("/:id",(req,res)=>{
@@ -48,4 +51,31 @@ Registerroutes.get("/:id",(req,res)=>{
     res.json(err)
    })
 })
+
+
+ //routing to add new customers
+ Registerroutes.patch('/:id',(req,res)=>{ 
+    Users.findById(req.params.id).then((value)=>{
+        let customer = req.body    
+       value.customer = {
+        name: customer.name,
+        phonenumber: customer.phonenumber,
+        email: customer.email,
+        ServiceRendered: customer.ServiceRendered,
+        amountPaidUpfront: customer.amountPaidUpfront,
+        Balance: customer.Balance
+       }
+       value.save().then((v)=>{
+        res.send(v)
+       }).catch((err)=>{
+        res.json({
+            meassage: err
+        })
+       })
+    }).catch((err)=>{
+        res.json({
+            message:err
+        })
+    })
+   })
 export default Registerroutes
