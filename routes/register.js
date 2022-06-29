@@ -53,29 +53,35 @@ Registerroutes.get("/:id",(req,res)=>{
 })
 
 
- //routing to add new customers
+ //routing to add new customers to user
+
+//  NOTE: usersid would be gotten from user and use to add customers to the db
+
+
  Registerroutes.patch('/:id',(req,res)=>{ 
-    Users.findById(req.params.id).then((value)=>{
-        let customer = req.body    
-       value.customer = {
-        name: customer.name,
-        phonenumber: customer.phonenumber,
-        email: customer.email,
-        ServiceRendered: customer.ServiceRendered,
-        amountPaidUpfront: customer.amountPaidUpfront,
-        Balance: customer.Balance
-       }
-       value.save().then((v)=>{
-        res.send(v)
-       }).catch((err)=>{
-        res.json({
-            meassage: err
-        })
-       })
-    }).catch((err)=>{
+    Users.findByIdAndUpdate(req.params.id,
+        { $push: {  customer : [{
+            name: req.body.name,
+            phonenumber: req.body.phonenumber,
+            email: req.body.email,
+            ServiceRendered: req.body.ServiceRendered,
+            amountPaidUpfront: req.body.amountPaidUpfront,
+            Balance: req.body.Balance
+        }]} 
+    })
+    .then((value)=>{
+        res.json(value)
+    })
+    .catch((err)=>{
         res.json({
             message:err
         })
     })
+
+
+
    })
+
+
+
 export default Registerroutes
